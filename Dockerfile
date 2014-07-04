@@ -2,6 +2,9 @@ FROM centos:latest
 
 MAINTAINER Abed Halawi <halawi.abed@gmail.com>
 
+# update packages
+RUN yum -y update
+
 # install openssh server
 RUN yum -y install openssh-server
 
@@ -21,8 +24,6 @@ RUN ssh-keygen -b 1024 -t dsa -f /etc/ssh/ssh_host_dsa_key
 ADD docker_ssh.pub /root/.ssh/authorized_keys
 RUN chmod 400 /root/.ssh/authorized_keys
 RUN chown root:root /root/.ssh/authorized_keys
-# tell ssh to not use ugly PAM
-RUN sed -i 's/UsePAM\syes/UsePAM no/' /etc/ssh/sshd_config
 
 # make the terminal prettier
 RUN echo 'export PS1="[\u@docker] \W # "' >> /root/.bash_profile
@@ -49,6 +50,8 @@ RUN echo 'files = /etc/supervisord.d/*.ini' >> /etc/supervisord.conf
 RUN echo [program:sshd] >> /etc/supervisord.d/ssh.ini
 RUN echo 'command=/usr/sbin/sshd -D' >> /etc/supervisord.d/ssh.ini
 RUN echo  >> /etc/supervisord.d/ssh.ini
+
+RUN yum clean all
 
 EXPOSE 22
 
