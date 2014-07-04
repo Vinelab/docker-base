@@ -10,3 +10,7 @@ it to manage any added services as well.
 ### Run
 - `docker run -d -p 7788:22 vinelab/base`
 - access using ssh: `ssh root@localhost -p 7788` or the equivalent to `localhost` according to your docker installation.
+
+### Adding Services
+To add a service to be managed by supervisor include the *ini* file of the program in `/etc/supervisord.d/` with a `.ini`
+extension.
