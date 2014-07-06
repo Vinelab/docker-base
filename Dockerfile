@@ -36,7 +36,7 @@ RUN echo 'export PS1="[\u@docker] \W # "' >> /root/.bash_profile
 RUN echo 'NETWORKING=yes' >> /etc/sysconfig/network
 
 # install supervisord
-RUN /bin/rpm -Uvh http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
+RUN yum -y install http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
 RUN yum -y install python-setuptools
 RUN easy_install supervisor
 RUN /usr/bin/echo_supervisord_conf > /etc/supervisord.conf
