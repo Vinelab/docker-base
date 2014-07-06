@@ -63,6 +63,8 @@ RUN echo  >> /etc/supervisord.d/ssh.ini
 
 RUN yum clean all
 
+# setup locale
+RUN echo 'LANG=C' > /etc/sysconfig/i18n
 EXPOSE 22
 EXPOSE 9001
 
