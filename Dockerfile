@@ -65,7 +65,11 @@ RUN yum clean all
 
 # setup locale
 RUN echo 'LANG=C' > /etc/sysconfig/i18n
+
+ADD run /
+RUN chmod +x /run
+
 EXPOSE 22
 EXPOSE 9001
 
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
+CMD /run
