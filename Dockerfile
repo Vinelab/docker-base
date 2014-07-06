@@ -45,6 +45,12 @@ RUN mkdir -p /var/log/supervisord
 # make supervisor run in foreground
 RUN sed -i -e "s/^nodaemon=false/nodaemon=true/" /etc/supervisord.conf
 
+# make supervisor run the http server on 9001
+RUN sed -i -e "s/^;\[inet_http_server\]/\[inet_http_server\]/" /etc/supervisord.conf
+RUN sed -i -e "s/^;port=127.0.0.1:9001/port=0.0.0.0:9001/" /etc/supervisord.conf
+RUN sed -i -e "s/^;username=user/username=vinelab/" /etc/supervisord.conf
+RUN sed -i -e "s/^;password=123/password=vinelab/" /etc/supervisord.conf
+
 # tell supervisor to include relative .ini files
 RUN mkdir /etc/supervisord.d
 RUN echo [include] >> /etc/supervisord.conf
@@ -58,5 +64,6 @@ RUN echo  >> /etc/supervisord.d/ssh.ini
 RUN yum clean all
 
 EXPOSE 22
+EXPOSE 9001
 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
