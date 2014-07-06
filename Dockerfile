@@ -5,6 +5,10 @@ MAINTAINER Abed Halawi <halawi.abed@gmail.com>
 # update packages
 RUN yum -y update
 
+# install basic software
+RUN yum install -y vim
+RUN yum install -y wget
+
 # install openssh server
 RUN yum -y install openssh-server
 
