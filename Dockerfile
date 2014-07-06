@@ -1,6 +1,6 @@
 FROM centos:latest
 
-MAINTAINER Abed Halawi <halawi.abed@gmail.com>
+MAINTAINER Abed Halawi <abed.halawi@vinelab.com>
 
 # update packages
 RUN yum -y update
