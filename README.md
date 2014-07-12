@@ -3,16 +3,19 @@ A base image that allows simple ssh access through ssh keys using `supervisord` 
 it to manage any added services as well.
 
 ### Setup
-- add `docker_ssh_rsa` to your ssh agent:
-    - `eval ssh-agent`
-    - `ssh-add docker_ssh_rsa`
+- add `docker_ssh_rsa` to your ssh configuration:
+    - copy `docker_ssh_rsa` to `~/.ssh/docker_ssh_rsa`
+    - open `/etc/ssh_config`
+    - under the `Host *` configuration add `IdentityFile ~/.ssh/docker_ssh_rsa`
 
 ### Run
 - `docker run -d -p 7788:22 vinelab/base`
 - access using ssh: `ssh root@localhost -p 7788` or the equivalent to `localhost` according to your docker installation.
 
 ### Supervisor
+
 #### Adding Services
+
 To add a service to be managed by supervisor include the *ini* file of the program in `/etc/supervisord.d/` with a `.ini`
 extension and tell supervisor about it with `supervisorctl reread`.
 
