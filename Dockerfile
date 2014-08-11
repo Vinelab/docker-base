@@ -6,8 +6,7 @@ MAINTAINER Abed Halawi <abed.halawi@vinelab.com>
 RUN yum -y update
 
 # install basic software
-RUN yum install -y vim
-RUN yum install -y wget
+RUN yum install -y rsyslog vixie-cron vim wget tar
 
 # install openssh server
 RUN yum -y install openssh-server
@@ -35,7 +34,7 @@ RUN echo 'export PS1="[\u@docker] \W # "' >> /root/.bash_profile
 # enable networking
 RUN echo 'NETWORKING=yes' >> /etc/sysconfig/network
 
-# install supervisord
+# install & configure supervisord
 RUN yum -y install http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
 RUN yum -y install python-setuptools
 RUN easy_install supervisor
@@ -56,10 +55,10 @@ RUN mkdir /etc/supervisord.d
 RUN echo [include] >> /etc/supervisord.conf
 RUN echo 'files = /etc/supervisord.d/*.ini' >> /etc/supervisord.conf
 
-# add sshd program to supervisord config
-RUN echo [program:sshd] >> /etc/supervisord.d/ssh.ini
-RUN echo 'command=/usr/sbin/sshd -D' >> /etc/supervisord.d/ssh.ini
-RUN echo  >> /etc/supervisord.d/ssh.ini
+# add programs to supervisord config
+ADD ini/rsyslog.ini /etc/supervisord.d/rsyslog.ini
+ADD ini/cron.ini /etc/supervisord.d/cron.ini
+ADD ini/ssh.ini /etc/supervisord.d/ssh.ini
 
 RUN yum clean all
 
