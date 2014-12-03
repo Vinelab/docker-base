@@ -11,9 +11,6 @@ RUN yum install -y rsyslog vixie-cron vim wget tar
 # make the terminal prettier
 RUN echo 'export PS1="[\u@docker] \W # "' >> /root/.bash_profile
 
-# enable networking
-# RUN echo 'NETWORKING=yes' >> /etc/sysconfig/network
-
 # install & configure supervisord
 RUN yum -y install http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
 RUN yum -y install python-setuptools
@@ -47,7 +44,6 @@ RUN echo 'LANG=C' > /etc/sysconfig/i18n
 ADD run /
 RUN chmod +x /run
 
-EXPOSE 22
 EXPOSE 9001
 
 CMD /run
